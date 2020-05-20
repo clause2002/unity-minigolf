@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityAtoms.BaseAtoms;
+using UnityAtoms.Mobile;
 using UnityEngine;
 
 public class TrajectoryPrediction : MonoBehaviour
@@ -11,11 +12,18 @@ public class TrajectoryPrediction : MonoBehaviour
     [SerializeField]
     private float predictionTime = 2.0f;
 
-    [SerializeField]
-    private LineRenderer lineRenderer;
+    private bool isPredicting = false;
+
+    
+
+    [Header("References")]
 
     [SerializeField]
     private Transform target;
+
+    [SerializeField]
+    private LineRenderer lineRenderer;
+
     private Rigidbody2D targetRb2D;
 
     private List<Vector3> trajectoryPoints = new List<Vector3>();
@@ -30,8 +38,28 @@ public class TrajectoryPrediction : MonoBehaviour
     
     private void Update()
     {
+        transform.position = target.position;
+
+        if(isPredicting)
+        {
+            DisplayTrajectory();
+        }
+
         
     }
+
+    public void TogglePrediction(TouchUserInput tui)
+    {
+      if(tui.InputState == TouchUserInput.State.None)
+        {
+            isPredicting = false;
+            return;
+        }
+
+        isPredicting = true;
+      
+       
+    }    
 
     private void DisplayTrajectory()
     {
@@ -47,6 +75,14 @@ public class TrajectoryPrediction : MonoBehaviour
         {
             vel += Physics2D.gravity * Time.fixedDeltaTime;
             vel *= Mathf.Clamp01(1.0f - (drag * Time.fixedDeltaTime));
+            pos += vel * Time.fixedDeltaTime;
+
+            trajectoryPoints.Add(pos);
         }
+
+        lineRenderer.positionCount = trajectoryPoints.Count;
+        lineRenderer.SetPositions(trajectoryPoints.ToArray());
+
+        trajectoryPoints.Clear();
     }    
 }

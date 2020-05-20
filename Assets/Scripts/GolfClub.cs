@@ -11,6 +11,7 @@ public class GolfClub : MonoBehaviour
     public Vector2Variable hitValue;
     public Rigidbody2D ballRb2D;
 
+    private Vector2 hitVector;
 
 
 
@@ -29,12 +30,17 @@ public class GolfClub : MonoBehaviour
 
     public void ProcessDrag(TouchUserInput tui)
     {
-
-        if (tui.InputState == TouchUserInput.State.Up)
+        if(tui.InputState == TouchUserInput.State.Up)
         {
-            Vector2 hitVector = tui.InputPos - tui.InputPosLastDown;
+            hitVector = tui.InputPos - tui.InputPosLastDown;
             hitValue.Value = hitpower * hitVector;
-            ballRb2D.AddForce(hitValue.Value);
+
+        }
+       else if (tui.InputState == TouchUserInput.State.Up)
+        {
+            
+            ballRb2D.AddForce(hitValue.Value, ForceMode2D.Impulse);
+            hitValue.Value = Vector2.zero;
         }
     }
 }
