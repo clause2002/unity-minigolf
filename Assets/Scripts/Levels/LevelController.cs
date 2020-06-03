@@ -1,18 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityAtoms;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
-public class NewBehaviourScript2 : MonoBehaviour
+public class LevelController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+   [SerializeField] private LevelData levelData;
+
+    [SerializeField] private LevelDataEvent goLevelEvent;
+    [SerializeField] private VoidEvent goNextLevelEvent;
+    [SerializeField] private VoidEvent goRepeat;
+    [SerializeField] private VoidEvent goMainMenu;
+
+    public void CallLevel()
     {
-        
+        goLevelEvent?.Raise(levelData);
+
+        //if(goLevelEvent)
+        //{
+        //    goLevelEvent.Raise(levelData);
+        //}
+
+    }
+    public void CallNextLevel()
+    {
+        goNextLevelEvent?.Raise();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CallRepeat()
     {
-        
+        goRepeat?.Raise();
+    }
+
+    public void CallMainMenu()
+    {
+        goMainMenu?.Raise();
     }
 }
+

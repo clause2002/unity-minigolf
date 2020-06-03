@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c73bbd6332447694683778b3fe9df0f6, type: 3}
-  m_Name: LevelData
+  m_Name: LevelData_Basic1
   m_EditorClassIdentifier: 
-  scenename: 
-  avarageHit: 0
+  scenename: Level_Basic1
+  avarageHit: 2
